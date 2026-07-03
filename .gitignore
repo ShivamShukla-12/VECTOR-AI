@@ -1,0 +1,23 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+vector_procurement.db
+.pytest_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+dist/
+out/
+.env
+.env.local
+.env.production
+
+# Editor & System files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

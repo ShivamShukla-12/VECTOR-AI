@@ -1,0 +1,18 @@
+{
+  "Stainless Steel Pipes": {
+    "market_price": 1950,
+    "supplier_rating": 72
+  },
+  "Plastic Granules": {
+    "market_price": 118,
+    "supplier_rating": 89
+  },
+  "Microcontrollers": {
+    "market_price": 3900,
+    "supplier_rating": 54
+  },
+  "Copper Cables": {
+    "market_price": 450,
+    "supplier_rating": 85
+  }
+}
