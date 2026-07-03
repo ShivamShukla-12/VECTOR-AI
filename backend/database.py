@@ -51,6 +51,14 @@ class QuoteAnalysis(Base):
         except Exception:
             strategy = [self.negotiation_strategy] if self.negotiation_strategy else []
             
+        # Calculate price variance percentage dynamically
+        price = self.price if self.price is not None else 0.0
+        qty = self.quantity if self.quantity is not None else 1
+        unit_price = price / qty if qty > 0 else price
+        market_avg = self.market_average if self.market_average is not None else 100.0
+        price_variance_pct = ((unit_price - market_avg) / market_avg * 100) if market_avg > 0 else 0
+        price_variance_pct = round(price_variance_pct, 1)
+
         return {
             "id": self.id,
             "created_at": self.created_at.isoformat() if self.created_at else None,
@@ -72,6 +80,7 @@ class QuoteAnalysis(Base):
                 "vendor_rating": self.vendor_rating,
                 "vendor_risk": self.vendor_risk,
                 "savings_estimate": self.savings_estimate,
+                "price_variance_pct": price_variance_pct,
                 "risk_score": self.risk_score,
             },
             "negotiation": {
