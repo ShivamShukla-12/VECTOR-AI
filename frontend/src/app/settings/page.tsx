@@ -24,12 +24,12 @@ export default function SettingsPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // General Settings state
-  const [apiLocation, setApiLocation] = useState('http://localhost:8000');
+  const [apiLocation, setApiLocation] = useState(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000');
   const dbLocation = 'vector_procurement.db (SQLite Local)';
   const [strategyFocus, setStrategyFocus] = useState('balanced');
   const [targetSavingsPct, setTargetSavingsPct] = useState('10');
 
-  const API_URL = 'http://localhost:8000';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
   const fetchBenchmarks = async () => {
     setIsLoading(true);

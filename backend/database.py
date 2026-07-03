@@ -4,11 +4,25 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./vector_procurement.db"
+import os
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL") or os.environ.get("POSTGRES_URL")
+
+if SQLALCHEMY_DATABASE_URL:
+    if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+else:
+    # Use /tmp folder on Vercel as it is the only writable directory in serverless execution
+    if "VERCEL" in os.environ:
+        db_path = "/tmp/vector_procurement.db"
+    else:
+        db_path = "./vector_procurement.db"
+        
+    SQLALCHEMY_DATABASE_URL = f"sqlite:///{db_path}"
+    engine = create_engine(
+        SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
